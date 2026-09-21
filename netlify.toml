@@ -1,0 +1,78 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+
+[[headers]]
+  for = "/*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/emulator/data/cores/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/emulator/data/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*.data"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/games/*.bin"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/games/*.cue"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/games/*.iso"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/games/*.chd"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/games/*.zip"
+  [headers.values]
+    Content-Type = "application/zip"
+    Cache-Control = "public, max-age=31536000"
+
+# Optional COOP/COEP if you later enable EJS_threads = true
+# [[headers]]
+#   for = "/*"
+#   [headers.values]
+#     Cross-Origin-Opener-Policy = "same-origin"
+#     Cross-Origin-Embedder-Policy = "require-corp"

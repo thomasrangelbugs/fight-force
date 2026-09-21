@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta name="theme-color" content="#05070c" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Fighting Force" />
+  <meta name="description" content="Fighting Force — PlayStation 1 Web Edition" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-192.png" />
+  <title>Fighting Force — Web Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- BOOT / TITLE -->
+    <section id="boot-screen" class="screen boot-screen" aria-label="Tela inicial">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="boot-glow" aria-hidden="true"></div>
+      <div class="boot-content">
+        <p class="boot-eyebrow">PLAYSTATION</p>
+        <h1 class="boot-title">FIGHTING FORCE</h1>
+        <p class="boot-sub">WEB EDITION</p>
+        <button id="btn-play" class="btn-play" type="button">JOGAR</button>
+        <p class="boot-meta">PC • Celular • Controle</p>
+      </div>
+      <p id="capability-warning" class="capability-warning" hidden></p>
+    </section>
+
+    <!-- LOADING -->
+    <section id="loading-screen" class="screen loading-screen" hidden aria-live="polite">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="loading-content">
+        <h2 class="loading-title">FIGHTING FORCE</h2>
+        <p id="loading-status" class="loading-status">Inicializando PlayStation...</p>
+        <div class="loading-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="loading-fill" class="loading-fill"></div>
+        </div>
+        <p id="loading-detail" class="loading-detail">Preparando emulador</p>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game-screen" class="screen game-screen" hidden>
+      <header class="game-hud">
+        <button id="btn-menu" class="hud-btn" type="button" aria-label="Menu">☰</button>
+        <div class="hud-center">
+          <span class="hud-title">FIGHTING FORCE</span>
+          <span id="gamepad-badge" class="gamepad-badge" hidden>Controle conectado</span>
+        </div>
+        <div class="hud-actions">
+          <button id="btn-save" class="hud-btn" type="button" title="Salvar">💾</button>
+          <button id="btn-load" class="hud-btn" type="button" title="Carregar">📂</button>
+          <button id="btn-fullscreen" class="hud-btn" type="button" title="Tela cheia">⛶</button>
+        </div>
+      </header>
+
+      <div id="game-stage" class="game-stage">
+        <div id="game" class="ejs-player"></div>
+        <div id="touch-controls" class="touch-controls" hidden aria-hidden="true">
+          <div class="tc-shoulder tc-left">
+            <button class="tc-btn tc-shoulder-btn" data-btn="l2" type="button">L2</button>
+            <button class="tc-btn tc-shoulder-btn" data-btn="l1" type="button">L1</button>
+          </div>
+          <div class="tc-shoulder tc-right">
+            <button class="tc-btn tc-shoulder-btn" data-btn="r2" type="button">R2</button>
+            <button class="tc-btn tc-shoulder-btn" data-btn="r1" type="button">R1</button>
+          </div>
+
+          <div class="tc-dpad" aria-label="Direcional">
+            <button class="tc-btn tc-dir" data-btn="up" type="button">▲</button>
+            <button class="tc-btn tc-dir" data-btn="left" type="button">◀</button>
+            <button class="tc-btn tc-dir" data-btn="right" type="button">▶</button>
+            <button class="tc-btn tc-dir" data-btn="down" type="button">▼</button>
+          </div>
+
+          <div class="tc-face" aria-label="Botões de ação">
+            <button class="tc-btn tc-face-btn tc-tri" data-btn="triangle" type="button">△</button>
+            <button class="tc-btn tc-face-btn tc-cir" data-btn="circle" type="button">○</button>
+            <button class="tc-btn tc-face-btn tc-cro" data-btn="cross" type="button">×</button>
+            <button class="tc-btn tc-face-btn tc-squ" data-btn="square" type="button">□</button>
+          </div>
+
+          <div class="tc-system">
+            <button class="tc-btn tc-sys" data-btn="select" type="button">SELECT</button>
+            <button class="tc-btn tc-sys" data-btn="start" type="button">START</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="rotate-gate" class="rotate-gate" hidden>
+        <div class="rotate-card">
+          <div class="rotate-icon" aria-hidden="true">↻</div>
+          <p>Gire o celular para jogar</p>
+          <p class="rotate-hint">Modo paisagem recomendado</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- IN-GAME MENU -->
+    <div id="pause-menu" class="pause-menu" hidden>
+      <div class="pause-panel" role="dialog" aria-label="Menu do jogo">
+        <h3>MENU</h3>
+        <button type="button" data-action="continue">Continuar</button>
+        <button type="button" data-action="save">Salvar</button>
+        <button type="button" data-action="load">Carregar</button>
+        <button type="button" data-action="controls">Controles</button>
+        <button type="button" data-action="fullscreen">Tela Cheia</button>
+        <button type="button" data-action="restart">Reiniciar</button>
+        <button type="button" data-action="exit" class="danger">Sair</button>
+      </div>
+    </div>
+
+    <!-- CONTROLS SETTINGS -->
+    <div id="controls-modal" class="pause-menu" hidden>
+      <div class="pause-panel controls-panel" role="dialog" aria-label="Controles">
+        <h3>CONTROLES</h3>
+        <label class="ctrl-row">Opacidade
+          <input id="ctrl-opacity" type="range" min="25" max="95" value="55" />
+        </label>
+        <label class="ctrl-row">Tamanho
+          <input id="ctrl-size" type="range" min="70" max="140" value="100" />
+        </label>
+        <label class="ctrl-row">Posição vertical
+          <input id="ctrl-offset" type="range" min="0" max="40" value="8" />
+        </label>
+        <label class="ctrl-row toggle-row">
+          <span>Vibração</span>
+          <input id="ctrl-vibrate" type="checkbox" checked />
+        </label>
+        <label class="ctrl-row toggle-row">
+          <span>Mostrar controles</span>
+          <input id="ctrl-visible" type="checkbox" checked />
+        </label>
+        <button type="button" id="ctrl-close">Fechar</button>
+      </div>
+    </div>
+
+    <!-- ERROR TOAST -->
+    <div id="error-toast" class="error-toast" hidden role="alert"></div>
+  </div>
+
+  <script src="config.js?v=3"></script>
+  <script type="module" src="src/app.js?v=3"></script>
+</body>
+</html>

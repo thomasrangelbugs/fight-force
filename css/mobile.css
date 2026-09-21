@@ -1,0 +1,197 @@
+/* Mobile / touch overlay — activated via .touch-ui on body */
+
+.touch-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  touch-action: none;
+  --tc-opacity: 0.55;
+  --tc-scale: 1;
+  --tc-offset: 8px;
+  padding:
+    calc(6px + var(--safe-t))
+    calc(8px + var(--safe-r))
+    calc(var(--tc-offset) + var(--safe-b))
+    calc(8px + var(--safe-l));
+}
+
+.touch-controls .tc-btn {
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  appearance: none;
+  border: 1px solid rgba(200, 220, 255, 0.35);
+  background: rgba(20, 28, 42, 0.55);
+  color: rgba(230, 238, 255, 0.92);
+  font-family: var(--font-mono);
+  opacity: var(--tc-opacity);
+  transition: opacity 0.08s linear, background 0.08s linear;
+  -webkit-touch-callout: none;
+}
+
+.touch-controls .tc-btn.is-pressed,
+.touch-controls .tc-btn:active {
+  opacity: 0.92;
+  background: rgba(60, 100, 200, 0.55);
+}
+
+.tc-shoulder {
+  position: absolute;
+  top: calc(8px + var(--safe-t));
+  display: flex;
+  gap: 8px;
+}
+
+.tc-shoulder.tc-left {
+  left: calc(10px + var(--safe-l));
+}
+
+.tc-shoulder.tc-right {
+  right: calc(10px + var(--safe-r));
+}
+
+.tc-shoulder-btn {
+  min-width: 56px;
+  min-height: 44px;
+  padding: 8px 12px;
+  font-size: calc(0.75rem * var(--tc-scale));
+  border-radius: 6px;
+}
+
+.tc-dpad {
+  position: absolute;
+  left: calc(12px + var(--safe-l));
+  bottom: calc(18px + var(--safe-b) + var(--tc-offset));
+  width: calc(150px * var(--tc-scale));
+  height: calc(150px * var(--tc-scale));
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+.tc-dpad .tc-dir {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 8px;
+  font-size: calc(0.95rem * var(--tc-scale));
+}
+
+.tc-dpad .tc-dir[data-btn="up"] { grid-column: 2; grid-row: 1; }
+.tc-dpad .tc-dir[data-btn="left"] { grid-column: 1; grid-row: 2; }
+.tc-dpad .tc-dir[data-btn="right"] { grid-column: 3; grid-row: 2; }
+.tc-dpad .tc-dir[data-btn="down"] { grid-column: 2; grid-row: 3; }
+
+.tc-face {
+  position: absolute;
+  right: calc(12px + var(--safe-r));
+  bottom: calc(18px + var(--safe-b) + var(--tc-offset));
+  width: calc(150px * var(--tc-scale));
+  height: calc(150px * var(--tc-scale));
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+.tc-face-btn {
+  width: calc(48px * var(--tc-scale));
+  height: calc(48px * var(--tc-scale));
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  font-size: calc(1.05rem * var(--tc-scale));
+  justify-self: center;
+  align-self: center;
+}
+
+.tc-tri { grid-column: 2; grid-row: 1; color: #7dffb0; }
+.tc-cir { grid-column: 3; grid-row: 2; color: #ff8b8b; }
+.tc-cro { grid-column: 2; grid-row: 3; color: #9ec1ff; }
+.tc-squ { grid-column: 1; grid-row: 2; color: #ffb4df; }
+
+.tc-system {
+  position: absolute;
+  left: 50%;
+  bottom: calc(10px + var(--safe-b) + var(--tc-offset));
+  transform: translateX(-50%);
+  display: flex;
+  gap: 14px;
+}
+
+.tc-sys {
+  min-width: 72px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: calc(0.65rem * var(--tc-scale));
+  letter-spacing: 0.08em;
+}
+
+.rotate-gate {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.88);
+  text-align: center;
+  padding: 24px;
+}
+
+.rotate-card {
+  max-width: 280px;
+}
+
+.rotate-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  animation: spin-hint 2.4s ease-in-out infinite;
+}
+
+@keyframes spin-hint {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(90deg); }
+  60% { transform: rotate(90deg); }
+}
+
+.rotate-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Portrait phones: encourage rotate, but do not hard-block if user dismisses visually */
+@media (orientation: portrait) and (max-width: 900px) {
+  body.touch-ui .rotate-gate:not([hidden]) {
+    display: grid;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .game-hud {
+    height: 40px;
+  }
+
+  .tc-dpad,
+  .tc-face {
+    width: calc(128px * var(--tc-scale));
+    height: calc(128px * var(--tc-scale));
+    bottom: calc(8px + var(--safe-b) + var(--tc-offset));
+  }
+
+  .tc-shoulder {
+    top: 4px;
+  }
+}
+
+/* Desktop: never show touch layer unless forced */
+body:not(.touch-ui) .touch-controls {
+  display: none !important;
+}
+
+body.touch-ui.controls-hidden .touch-controls {
+  visibility: hidden;
+  pointer-events: none;
+}

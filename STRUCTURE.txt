@@ -1,0 +1,28 @@
+/
+/index.html
+/config.js
+/package.json
+/netlify.toml
+/manifest.webmanifest
+/service-worker.js
+/src/
+  app.js
+  audio.js
+  controls.js
+  emulator.js
+  fullscreen.js
+  gamepad.js
+  mobile.js
+  saves.js
+/css/
+  style.css
+  mobile.css
+/assets/
+  icons/
+  logo/
+/emulator/
+  data/          (EmulatorJS 4.2.3 + cores PSX)
+/games/
+  FightingForce-USA.zip          ← entry point (EJS_gameUrl)
+  Fighting Force (USA).cue       ← preserved
+  Fighting Force (USA) (Track*).bin
